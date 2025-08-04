@@ -6,7 +6,10 @@ from sklearn.metrics.pairwise import cosine_similarity
 
 from amadeusgpt.programs.api_registry import INTEGRATION_API_REGISTRY
 
-client = OpenAI()
+try:
+    client = OpenAI()
+except Exception as e:
+    client = None
 
 
 class IntegrationModuleHub:
