@@ -17,13 +17,13 @@ class OpenAIAdapter:
             raise ValueError("API Key is required")
         
         self.api_key = api_key
-        self.base_url = "https://api.openrouter.ai/api/v1"
+        self.base_url = "https://openrouter.ai/api/v1"
         self.client = None
         self.is_openrouter = False
         self._initialized = True
         self._initialize_client()
 
-    def __call__(self, *args: Any, **kwds: Any) -> Any:
+    def __call__(self, *args, **kwargs):
         if self.client is None:
             raise RuntimeError("Client is not initialized")
         return self.client
