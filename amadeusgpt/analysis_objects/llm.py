@@ -13,6 +13,7 @@ from openai import OpenAI
 
 from amadeusgpt.programs.sandbox import Sandbox
 from amadeusgpt.utils import AmadeusLogger, QA_Message, create_qa_message
+from amadeusgpt.utils.openai_adapter import OpenAIAdapter
 
 from .base import AnalysisObject
 
@@ -65,17 +66,17 @@ class LLM(AnalysisObject):
         This is routed to openai > 1.0 interfaces
         """
 
-        if self.config.get("use_streamlit", False):
-            if "OPENAI_API_KEY" in os.environ:
-                openai.api_key = os.environ["OPENAI_API_KEY"]
-        else:
-            openai.api_key = os.environ["OPENAI_API_KEY"]
+        # if self.config.get("use_streamlit", False):
+        #     if "OPENAI_API_KEY" in os.environ:
+        #         openai.api_key = os.environ["OPENAI_API_KEY"]
+        # else:
+        #     openai.api_key = os.environ["OPENAI_API_KEY"]
         response = None
         # gpt_model is default to be the cls.gpt_model, which can be easily set
-        gpt_model = self.gpt_model
+        # gpt_model = self.gpt_model
         # in streamlit app, "gpt_model" is set by the text box
 
-        client = OpenAI()
+        client = OpenAIAdapter().get_client()
 
         if self.config.get("use_streamlit", False):
             if "gpt_model" in st.session_state:
