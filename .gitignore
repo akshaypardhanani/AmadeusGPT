@@ -49,3 +49,5 @@ __pycache__/
 
 digest.txt
 uv.lock
+.vscode/launch.json
+amadeusgpt/modules_embedding.pickle

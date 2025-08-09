@@ -1,4 +1,5 @@
 import openai
+from amadeusgpt.utils.embedding_adapter import EmbeddingModel
 
 class OpenAIAdapter:
     _instance = None
@@ -22,6 +23,7 @@ class OpenAIAdapter:
         self.is_openrouter = False
         self._initialized = True
         self._initialize_client()
+        self.client.embeddings = EmbeddingModel(provider_type=self.get_provider_type()).embeddings
 
     def __call__(self, *args, **kwargs):
         if self.client is None:

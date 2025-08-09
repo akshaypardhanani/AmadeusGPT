@@ -1,9 +1,7 @@
 import os
 import traceback
 
-import streamlit as st
-
-from amadeusgpt import app_utils
+from amadeusgpt import app_utils, st
 from amadeusgpt.utils import validate_openai_api_key
 
 # Set page configuration
