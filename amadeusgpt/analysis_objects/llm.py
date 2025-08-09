@@ -90,7 +90,7 @@ class LLM(AnalysisObject):
 
         # the usage was recorded from the last run. However, since we have many LLMs that
         # share the call of this function, we will need to store usage and retrieve them from the database class
-        num_retries = 3
+        num_retries = 1
         for _ in range(num_retries):
             try:
                 json_data = {
@@ -260,7 +260,7 @@ class VisualLLM(LLM):
             multi_image_content=multi_image_content,
             in_place=True,
         )
-        response = self.connect_gpt(self.context_window, max_tokens=2000)
+        response = self.connect_gpt(self.context_window, max_tokens=20000)
         text = response.choices[0].message.content.strip()
 
         print("description of the image frame provided")
@@ -320,7 +320,7 @@ class CodeGenerationLLM(LLM):
 
         self.update_history("user", query)
 
-        response = self.connect_gpt(self.context_window, max_tokens=2000)
+        response = self.connect_gpt(self.context_window, max_tokens=20000)
         text = response.choices[0].message.content.strip()
         # need to keep the memory of the answers from LLM
         self.update_history("assistant", text)
@@ -375,7 +375,7 @@ All the modules were already imported so you don't need to import them again.
 Can you correct the code? Make sure you only write one function which is the updated function.
 """
         self.update_history("user", query)
-        response = self.connect_gpt(self.context_window, max_tokens=4096)
+        response = self.connect_gpt(self.context_window, max_tokens=20000)
         text = response.choices[0].message.content.strip()
         print(text)
         pattern = r"```python(.*?)```"
