@@ -7,6 +7,7 @@ keypoint_info:
     nose: "nose"
     neck: "neck" 
 llm_info:
+  gpt_model: "thudm/glm-z1-32b:free"
   keep_last_n_messages: 2 
 object_info:
   load_objects_from_disk: false
