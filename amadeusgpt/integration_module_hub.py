@@ -1,7 +1,7 @@
 import os
 import pickle
 
-from utils.openai_adapter import OpenAIAdapter
+from amadeusgpt.utils.openai_adapter import OpenAIAdapter
 from sklearn.metrics.pairwise import cosine_similarity
 
 from amadeusgpt import st

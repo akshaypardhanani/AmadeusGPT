@@ -52,3 +52,5 @@ uv.lock
 .vscode/launch.json
 amadeusgpt/modules_embedding.pickle
 temp_answer.json
+
+logs/
