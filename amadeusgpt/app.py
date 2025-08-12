@@ -19,8 +19,10 @@ def main():
     if "exist_valid_openai_api_key" not in st.session_state:
         if "OPENAI_API_KEY" in os.environ:
             st.session_state["exist_valid_openai_api_key"] = True
+            st.session_state["OPENAI_API_KEY"] = os.environ["OPENAI_API_KEY"]
         elif "OPENROUTER_API_KEY" in os.environ:
             st.session_state["exist_valid_openai_api_key"] = True
+            st.session_state["OPENROUTER_API_KEY"] = os.environ["OPENROUTER_API_KEY"]
         else:
             st.session_state["exist_valid_openai_api_key"] = False
 
