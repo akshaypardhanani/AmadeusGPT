@@ -23,7 +23,7 @@ class LLM(AnalysisObject):
     prices = {
         "gpt-4o": {"input": 5 / 10**6, "output": 15 / 10**6},
         "gpt-4o-mini": {"input": 0.15 / 10**6, "output": 0.6 / 10**6},
-        "thudm/glm-z1-32b:free": {"input": 0, "output": 0},
+        "qwen/qwen3-coder:free": {"input": 0, "output": 0},
     }
     total_cost = 0
 
