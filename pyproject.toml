@@ -39,3 +39,8 @@ ignore-words-list = 'mabe,missings,nd,tread'
 
 [tool.uv.sources]
 streamlit-drawable-canvas = { path = "streamlit-drawable-canvas", editable = true }
+
+[dependency-groups]
+dev = [
+    "pytest>=8.4.1",
+]

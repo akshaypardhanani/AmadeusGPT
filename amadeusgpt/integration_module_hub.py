@@ -5,6 +5,7 @@ from amadeusgpt.utils.openai_adapter import OpenAIAdapter
 from sklearn.metrics.pairwise import cosine_similarity
 
 from amadeusgpt import st
+from amadeusgpt.utils.api_key_util import get_api_key
 from amadeusgpt.programs.api_registry import INTEGRATION_API_REGISTRY
 
 
@@ -12,7 +13,7 @@ class IntegrationModuleHub:
     def __init__(self):
         self.amadeus_root = os.path.dirname(os.path.realpath(__file__))
         self.client = OpenAIAdapter(
-            api_key=st.session_state.get("OPENAI_API_KEY") or st.session_state.get("OPENROUTER_API_KEY") or st.session_state.get("openAI_token")).get_client()
+            api_key=get_api_key(st.session_state)).get_client()
 
     def save_embeddings(self):
         result = {}

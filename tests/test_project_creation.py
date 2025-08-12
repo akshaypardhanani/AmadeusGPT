@@ -15,8 +15,9 @@ def test_project_creation(example_name):
     result_folder = "temp_result_folder"
 
     kwargs = {
-        "llm_info.max_tokens": 2000,
+        "llm_info.max_tokens": 20000,
         "llm_info.temperature": 0.0,
+        'llm_info.gpt_model': "moonshotai/kimi-dev-72b:free"
         "llm_info.keep_last_n_messages": 2,
         "object_info.load_objects_from_disk": False,
         "object_info.use_grid_objects": False,
