@@ -10,8 +10,10 @@ import cv2
 import numpy as np
 import openai
 from openai import OpenAI
+from pydantic import ValidationError
 
 from amadeusgpt.programs.sandbox import Sandbox
+from amadeusgpt.system_prompts.visual_llm import VlmInferenceOutput
 from amadeusgpt.utils import AmadeusLogger, QA_Message, create_qa_message
 from amadeusgpt.utils.openai_adapter import OpenAIAdapter
 
@@ -267,13 +269,31 @@ class VisualLLM(LLM):
         print("description of the image frame provided")
         print(text)
 
+        thinking_pattern = r'<think>.*?</think>'
+        output_text = re.sub(thinking_pattern, '', text, flags=re.DOTALL)
+
+        print(f"output text after removing thinking: {output_text}")
+
         pattern = r"```json(.*?)```"
-        if len(re.findall(pattern, text, re.DOTALL)) == 0:
-            raise ValueError("can't parse the json string correctly", text)
+        if len(re.findall(pattern, output_text, re.DOTALL)) == 0:
+            raise ValueError("can't parse the json string correctly", output_text)
         else:
-            json_string = re.findall(pattern, text, re.DOTALL)[0]
-            json_obj = json.loads(json_string)
-            return json_obj
+            results = []
+            for response_json in re.findall(pattern, output_text, re.DOTALL):
+                try:
+                    json_obj = json.loads(response_json)
+                    VlmInferenceOutput.model_validate(json_obj)
+                    results.append(json_obj)
+                except ValidationError as val_err:
+                    print(f"Couldn't validate the json string correctly for {response_json}", val_err)
+                except Exception as e:
+                    print(f"Couldn't parse the json string correctly for {response_json}", e)
+                    raise e
+            if len(results) == 0:
+                raise ValueError("can't parse the json string correctly", output_text)
+            elif len(results) > 1:
+                print("WARNING!! Found multiple json strings. Returning only the first", results)
+            return results[0]
 
 
 class CodeGenerationLLM(LLM):
